@@ -62654,7 +62654,7 @@ Object.assign(I18N, {
    Google Sheets sync: every pupil's progress, tests, feedback and game
    scores go to the teacher's Google Sheet, and come back to every device
    ====================================================================== */
-const SHEET_URL_DEFAULT = "__SHEET_URL__";   // Apps Script web-app link (…/exec)
+const SHEET_URL_DEFAULT = "https://script.google.com/macros/s/AKfycbxgKc6FZ6Q_a7Z3Oe8iUkNgq6YeYDuFjjmxxw51nTucp5jBpGa8470IlK0fOqc7Ky1M/exec";   // Apps Script web-app link (…/exec)
 const SHEET_KEY = "scisong-sheet-url";
 function sheetUrl(){ let u = ""; try { u = localStorage.getItem(SHEET_KEY) || ""; } catch(e){}
   if (!u && /^https:\/\/script\.google\.com\//.test(SHEET_URL_DEFAULT)) u = SHEET_URL_DEFAULT; return u; }
