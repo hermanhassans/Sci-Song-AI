@@ -1546,6 +1546,7 @@ h2{color:#fff}
     <button class="chip" id="starChip" aria-label="Pupil and progress. Tap to switch pupil">★ 0/9</button>
     <nav class="tabs" aria-label="Sections">
       <button data-tab="home" style="--nc:#FFD27A"><span class="ni">🏠</span><span class="nl">Home</span></button>
+      <button data-tab="zakai" style="--nc:#B28CFF"><span class="ni">🤖</span><span class="nl">Zak AI</span></button>
       <button data-dd="learn" aria-expanded="false" style="--nc:#9FDDFF"><span class="ni">📖</span><span class="nl">Learn</span><span class="dd">▾</span></button>
       <button data-dd="songs" aria-expanded="false" style="--nc:#FFB8DA"><span class="ni">🎵</span><span class="nl">Songs</span><span class="dd">▾</span></button>
       <button data-tab="book" style="--nc:#FFC7A8"><span class="ni">📚</span><span class="nl">Storybook</span></button>
@@ -2019,6 +2020,10 @@ h2{color:#fff}
   </div>
 </section>
 
+<section data-panel="zakai" hidden>
+  <h1>🤖 Zak AI Live</h1>
+  <p class="lede">Talk to Baby Zak-One about anything, in Bahasa Melayu or English. Tap the microphone or type your question.</p>
+</section>
 <section data-panel="karaoke" hidden>
   <h1>🎤 Galaxy Karaoke Star</h1>
   <p class="lede">Sing the Sci-Song AI songs into the microphone! Baby Zak-One listens and gives you marks for singing the lyrics on time, following the beat and staying in tune. Who will be the class karaoke star?</p>
@@ -2536,7 +2541,7 @@ $("heroGalaxy").innerHTML = galaxySVG(31, 200);
 (function(){ const R = rng(99); let s = ""; for (let i = 0; i < 90; i++) s += `<circle cx="${(R()*400).toFixed(1)}" cy="${(R()*300).toFixed(1)}" r="${(.3+R()*1.1).toFixed(2)}" fill="#FFF6E0" opacity="${(.3+R()*.6).toFixed(2)}"/>`; $("stars").innerHTML = s; })();
 
 /* ---------- tabs ---------- */
-const TABS = ["home","learn","songs","book","vr","argame","night","arbeat","karaoke","activities","lyrics","rocket","games","quiz","beat","tests","feedback","contact","ranking","team","teacher"];
+const TABS = ["home","zakai","learn","songs","book","vr","argame","night","arbeat","karaoke","activities","lyrics","rocket","games","quiz","beat","tests","feedback","contact","ranking","team","teacher"];
 function showTab(t){
   if (["ar", "vr", "argame", "night", "arbeat", "karaoke"].includes(t)){ try { if (location.hash === "#" + t) vrWant = t; } catch(e){} if (t === "ar") t = "vr"; }
   if (!TABS.includes(t)) t = "home";
@@ -2554,7 +2559,7 @@ function showTab(t){
   if (t === "tests") renderTests();
   if (t === "feedback") renderFeedback();
   if (t === "book") setTimeout(() => bkOpen(), 0);
-  setTimeout(() => { if (typeof vrShow === "function") vrShow(t === "vr"); if (typeof agShow === "function") agShow(t === "argame"); if (typeof nvShow === "function") nvShow(t === "night"); if (typeof abShow === "function") abShow(t === "arbeat"); if (typeof krShow === "function") krShow(t === "karaoke"); [["argame", "agWrap", agFs], ["arbeat", "abWrap", abFs], ["karaoke", "krWrap", krFs]].forEach(([k, w, f]) => { if (k !== t && $(w) && $(w).classList.contains("fs")) f(false); }); }, 0);
+  setTimeout(() => { if (typeof vrShow === "function") vrShow(t === "vr"); if (typeof agShow === "function") agShow(t === "argame"); if (typeof nvShow === "function") nvShow(t === "night"); if (typeof abShow === "function") abShow(t === "arbeat"); if (typeof krShow === "function") krShow(t === "karaoke"); if (typeof zaiShow === "function") zaiShow(t === "zakai"); [["argame", "agWrap", agFs], ["arbeat", "abWrap", abFs], ["karaoke", "krWrap", krFs]].forEach(([k, w, f]) => { if (k !== t && $(w) && $(w).classList.contains("fs")) f(false); }); }, 0);
 }
 document.querySelectorAll("[data-tab]").forEach(b => b.addEventListener("click", () => {
   showTab(b.dataset.tab);
@@ -5404,8 +5409,8 @@ $("teReset").addEventListener("click", () => { if (!confirm("Restore the origina
 renderTeam(); renderTeamEditor();
 
 /* ---------- site search ---------- */
-const PANEL_NAME = { home:"Home", learn:"Learn", songs:"Songs", book:"Storybook", vr:"VR & AR Galaxy", argame:"Galaxy AR Game", night:"Night Sky Quest", arbeat:"Galaxy Beat AR", karaoke:"Galaxy Karaoke Star", activities:"Explore", lyrics:"Lyric game", rocket:"Rocket Run", games:"Game zone", quiz:"Quiz", beat:"Star Beat", tests:"Pre & post-test", feedback:"Feedback", contact:"Report / ask us", ranking:"Ranking", team:"Team" };
-const PANEL_ICON = { home:"🏠", learn:"📖", songs:"🎵", book:"📚", vr:"🥽", argame:"🎮", night:"🌙", arbeat:"🎶", karaoke:"🎤", activities:"🔭", lyrics:"🎤", rocket:"🚀", games:"🎮", quiz:"🏅", beat:"🎶", tests:"📝", feedback:"💬", contact:"📮", ranking:"🏆", team:"👩‍🚀" };
+const PANEL_NAME = { home:"Home", zakai:"Zak AI Live", learn:"Learn", songs:"Songs", book:"Storybook", vr:"VR & AR Galaxy", argame:"Galaxy AR Game", night:"Night Sky Quest", arbeat:"Galaxy Beat AR", karaoke:"Galaxy Karaoke Star", activities:"Explore", lyrics:"Lyric game", rocket:"Rocket Run", games:"Game zone", quiz:"Quiz", beat:"Star Beat", tests:"Pre & post-test", feedback:"Feedback", contact:"Report / ask us", ranking:"Ranking", team:"Team" };
+const PANEL_ICON = { home:"🏠", zakai:"🤖", learn:"📖", songs:"🎵", book:"📚", vr:"🥽", argame:"🎮", night:"🌙", arbeat:"🎶", karaoke:"🎤", activities:"🔭", lyrics:"🎤", rocket:"🚀", games:"🎮", quiz:"🏅", beat:"🎶", tests:"📝", feedback:"💬", contact:"📮", ranking:"🏆", team:"👩‍🚀" };
 const fold = t => String(t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 let searchIdx = [];
 function buildSearch(){
@@ -8081,6 +8086,534 @@ Object.assign(I18N, {
 });
 
 htDecorate();
+/* ======================================================================
+   🎙️ Sembang dengan Baby Zak-One: voice conversation in Bahasa Melayu
+   - listens with the browser's speech recogniser (ms-MY)
+   - understands questions, small talk, commands, oral quiz
+   - answers aloud in a Malay voice, with an animated Zak
+   ====================================================================== */
+const ZV_CSS = `
+.zv{position:fixed;inset:0;z-index:2147482000;display:flex;flex-direction:column;align-items:center;color:#fff;background:radial-gradient(120% 80% at 50% 20%,#3a1f8f 0%,#160d52 45%,#05041a 100%);font-family:var(--body-font);padding:calc(10px + env(safe-area-inset-top)) 14px calc(12px + env(safe-area-inset-bottom));overflow:hidden}
+.zv[hidden]{display:none}
+.zv::before{content:"";position:absolute;inset:-20%;background:radial-gradient(1.5px 1.5px at 20% 30%,#fff,transparent),radial-gradient(1px 1px at 70% 20%,#fff,transparent),radial-gradient(1.5px 1.5px at 40% 70%,#cfe3ff,transparent),radial-gradient(1px 1px at 85% 60%,#fff,transparent),radial-gradient(1px 1px at 10% 85%,#ffe9b8,transparent);background-size:260px 240px;opacity:.7;animation:drift 120s linear infinite;pointer-events:none}
+.zv-top{position:relative;width:100%;max-width:720px;display:flex;align-items:center;gap:10px}
+.zv-top h2{flex:1;margin:0;font-family:var(--head-font);font-size:clamp(1.05rem,4vw,1.4rem);background:var(--neon);-webkit-background-clip:text;background-clip:text;color:transparent}
+.zv-top button{flex:none;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);color:#fff;border-radius:999px;padding:8px 12px;font-weight:800}
+.zv-stage{position:relative;flex:1;min-height:0;width:100%;max-width:720px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.zv-bot{position:relative;width:min(46vw,220px);aspect-ratio:1;display:grid;place-items:center}
+.zv-bot svg{width:78%;height:auto;position:relative;z-index:2;filter:drop-shadow(0 12px 30px rgba(0,0,0,.45));animation:zvFloat 4s ease-in-out infinite}
+.zv-ring{position:absolute;inset:0;border-radius:50%;border:3px solid rgba(158,231,255,.0);z-index:1}
+.zv-glow{position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle,rgba(123,63,228,.55),transparent 70%);z-index:0}
+.zv[data-s="listen"] .zv-ring{animation:zvRing 1.6s ease-out infinite;border-color:rgba(158,231,255,.8)}
+.zv[data-s="listen"] .zv-ring.b{animation-delay:.55s}.zv[data-s="listen"] .zv-ring.c{animation-delay:1.1s}
+.zv[data-s="listen"] .zv-glow{background:radial-gradient(circle,rgba(63,224,208,.6),transparent 70%)}
+.zv[data-s="think"] .zv-bot svg{animation:zvThink 1s ease-in-out infinite}
+.zv[data-s="think"] .zv-glow{background:radial-gradient(circle,rgba(255,201,60,.45),transparent 70%);animation:zvSpin 2s linear infinite}
+.zv[data-s="talk"] .zv-bot svg{animation:zvTalk .32s ease-in-out infinite alternate}
+.zv[data-s="talk"] .zv-glow{background:radial-gradient(circle,rgba(255,122,217,.6),transparent 70%);animation:zvPulse .5s ease-in-out infinite alternate}
+@keyframes zvFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes zvRing{0%{transform:scale(.72);opacity:1}100%{transform:scale(1.35);opacity:0}}
+@keyframes zvThink{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+@keyframes zvTalk{from{transform:translateY(0) scale(1)}to{transform:translateY(-6px) scale(1.04)}}
+@keyframes zvPulse{from{transform:scale(.92)}to{transform:scale(1.08)}}
+@keyframes zvSpin{to{transform:rotate(360deg)}}
+.zv-state{font-weight:900;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;color:#9EE7FF;min-height:1.2em}
+.zv-say{max-width:600px;text-align:center;font-family:var(--head-font);font-weight:700;font-size:clamp(1.05rem,4.2vw,1.45rem);line-height:1.35;min-height:2.6em;text-shadow:0 3px 16px rgba(0,0,0,.5)}
+.zv-me{max-width:600px;text-align:center;color:#FFE29A;font-weight:800;font-size:clamp(.95rem,3.6vw,1.1rem);min-height:1.4em}
+.zv-me i{color:#B9B3F0;font-style:normal}
+.zv-bottom{position:relative;width:100%;max-width:720px;display:grid;gap:10px;justify-items:center}
+.zv-chips{display:flex;gap:6px;overflow-x:auto;max-width:100%;padding:2px 2px 4px;scrollbar-width:none}
+.zv-chips::-webkit-scrollbar{display:none}
+.zv-chips button{flex:none;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;border-radius:999px;padding:8px 12px;font-weight:800;font-size:.85rem;white-space:nowrap}
+.zv-mic{width:84px;height:84px;border-radius:50%;border:0;font-size:2.1rem;color:#22134F;background:linear-gradient(135deg,#FFE29A,#FF9BD5);box-shadow:0 0 0 6px rgba(255,255,255,.08),0 10px 34px rgba(255,138,216,.5);transition:transform .15s}
+.zv-mic:active{transform:scale(.94)}
+.zv[data-s="listen"] .zv-mic{background:linear-gradient(135deg,#7CF2E6,#3FA9E0);box-shadow:0 0 0 6px rgba(63,224,208,.25),0 0 40px rgba(63,224,208,.6)}
+.zv-row{display:flex;gap:8px;width:100%;max-width:560px}
+.zv-row input{flex:1;min-width:0;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;border-radius:999px;padding:10px 14px;font-weight:700;font-size:1rem}
+.zv-row button{border:0;border-radius:999px;padding:10px 16px;font-weight:900;background:#FFC93C;color:#22134F}
+.zv-opt{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;font-size:.85rem;font-weight:800;color:#CFC9FF}
+.zv-opt label{display:flex;gap:6px;align-items:center}
+.zv-note{font-size:.8rem;color:#B9B3F0;text-align:center;max-width:560px;margin:0}
+.zv-log{position:absolute;left:0;right:0;top:0;max-height:22%;overflow:auto;font-size:.82rem;color:#CFC9FF;text-align:center;opacity:.75;mask-image:linear-gradient(#000 60%,transparent);-webkit-mask-image:linear-gradient(#000 60%,transparent)}
+.zv-log p{margin:2px 0}
+@media (max-height:640px){ .zv-bot{width:min(34vw,150px)} .zv-mic{width:70px;height:70px;font-size:1.7rem} .zv-log{display:none} }
+.bot-talk{font-size:15px}
+`;
+document.head.insertAdjacentHTML("beforeend", "<style>" + ZV_CSS + "</style>");
+document.body.insertAdjacentHTML("beforeend", `<div class="zv" id="zv" hidden data-s="idle" role="dialog" aria-label="Sembang dengan Baby Zak-One" data-noi18n>
+  <div class="zv-top"><h2>🎙️ Sembang dengan Zak</h2><button id="zvClose" aria-label="Tutup">✕ Tutup</button></div>
+  <div class="zv-stage"><div class="zv-log" id="zvLog"></div>
+    <div class="zv-bot"><div class="zv-glow"></div><div class="zv-ring"></div><div class="zv-ring b"></div><div class="zv-ring c"></div><div id="zvFace"></div></div>
+    <div class="zv-state" id="zvState"></div><div class="zv-say" id="zvSay"></div><div class="zv-me" id="zvMe"></div></div>
+  <div class="zv-bottom">
+    <div class="zv-chips" id="zvChips"></div>
+    <button class="zv-mic" id="zvMic" aria-label="Tekan dan bercakap">🎙️</button>
+    <div class="zv-opt"><label><input type="checkbox" id="zvAuto" checked> 🔁 Sembang berterusan</label></div>
+    <div class="zv-row" id="zvRow"><input id="zvIn" maxlength="200" placeholder="Atau taip di sini…" autocomplete="off"><button id="zvSend">Hantar</button></div>
+    <p class="zv-note" id="zvNote"></p>
+  </div></div>`);
+$("zvFace").appendChild(tpl.content.cloneNode(true));
+
+/* ---------- knowledge (Bahasa Melayu) ---------- */
+const ZV_KB = [
+  [["planet", "besar"], "Planet yang paling besar ialah Musytari. Lebih daripada 1,000 Bumi boleh muat di dalamnya!"],
+  [["planet", "kecil"], "Planet yang paling kecil ialah Utarid. Ia juga paling hampir dengan Matahari."],
+  [["planet", "panas"], "Planet yang paling panas ialah Zuhrah, walaupun Utarid lebih dekat dengan Matahari."],
+  [["planet", "merah"], "Planet merah ialah Marikh, kerana tanahnya berwarna merah karat."],
+  [["planet", "gelang"], "Zuhal ialah planet yang terkenal dengan gelangnya yang cantik."],
+  [["planet", "jauh"], "Planet yang paling jauh dari Matahari ialah Neptun."],
+  [["planet", "dekat"], "Planet yang paling hampir dengan Matahari ialah Utarid."],
+  [["matahari"], "Matahari ialah sebuah bintang! Ia bintang yang paling hampir dengan Bumi dan memberi kita cahaya serta haba."],
+  [["bulan"], "Bulan ialah satelit semula jadi Bumi. Bulan tidak mengeluarkan cahaya sendiri. Ia memantulkan cahaya Matahari."],
+  [["bumi"], "Bumi ialah planet ketiga dari Matahari. Bumi berada dalam Sistem Suria, di dalam galaksi Bima Sakti."],
+  [["utarid"], "Utarid ialah planet yang paling hampir dengan Matahari dan juga planet yang paling kecil."],
+  [["zuhrah"], "Zuhrah ialah planet yang paling panas dalam Sistem Suria kerana atmosferanya memerangkap haba."],
+  [["marikh"], "Marikh digelar planet merah kerana tanahnya berwarna merah karat."],
+  [["musytari"], "Musytari ialah planet yang paling besar dalam Sistem Suria. Ia planet gas gergasi!"],
+  [["zuhal"], "Zuhal terkenal dengan gelangnya yang cantik. Gelang itu diperbuat daripada ais dan batu."],
+  [["neptun"], "Neptun ialah planet yang paling jauh dari Matahari dalam Sistem Suria. Ia sangat sejuk dan berangin."],
+  [["uranus"], "Uranus ialah planet gas yang berputar secara mengiring, seperti bola yang bergolek."],
+  [["lubang", "hitam"], "Lubang hitam ialah tempat di angkasa yang gravitinya sangat kuat sehingga cahaya pun tidak dapat keluar. Di tengah Bima Sakti ada lubang hitam yang sangat besar!"],
+  [["bintang", "jatuh"], "Bintang jatuh sebenarnya bukan bintang. Ia ialah meteor, iaitu batu kecil dari angkasa yang terbakar apabila masuk ke atmosfera Bumi."],
+  [["meteor"], "Meteor ialah batu angkasa yang terbakar dalam atmosfera Bumi. Kita nampak ia seperti garis cahaya di langit."],
+  [["buruj"], "Buruj ialah kumpulan bintang yang membentuk corak di langit, contohnya buruj Orion dan buruj Pari."],
+  [["orion"], "Orion ialah buruj yang berbentuk seperti pemburu. Tiga bintang di tengahnya membentuk tali pinggang Orion."],
+  [["pari"], "Buruj Pari berbentuk seperti layang-layang atau ikan pari. Ia digunakan untuk menunjukkan arah selatan."],
+  [["tahun", "cahaya"], "Tahun cahaya ialah jarak yang dilalui cahaya dalam satu tahun. Ia sangat jauh, kira-kira 9.5 trilion kilometer!"],
+  [["angkasawan"], "Angkasawan ialah orang yang pergi ke angkasa lepas. Angkasawan pertama Malaysia ialah Dato' Dr. Sheikh Muszaphar Shukor, pada tahun 2007."],
+  [["alam", "semesta"], "Alam semesta ialah segala-galanya: semua galaksi, bintang, planet dan ruang di antaranya. Ada berbilion-bilion galaksi di alam semesta!"],
+  [["berapa", "galaksi"], "Ada berbilion-bilion galaksi di alam semesta. Saintis masih terus mengiranya dengan teleskop!"],
+  [["bentuk", "galaksi"], "Ada tiga bentuk galaksi: lingkaran, elips dan tidak sekata. Bima Sakti ialah galaksi lingkaran berpalang."],
+  [["elips"], "Galaksi elips berbentuk bujur seperti telur. Bintang-bintangnya biasanya sudah tua."],
+  [["tidak", "sekata"], "Galaksi tidak sekata tiada bentuk yang tetap. Ia kelihatan bersepah seperti awan."],
+  [["lingkaran"], "Galaksi lingkaran mempunyai lengan yang berpusar seperti pusaran air. Bima Sakti ialah galaksi lingkaran!"],
+  [["teleskop"], "Teleskop ialah alat untuk melihat objek yang sangat jauh di langit, seperti planet, bintang dan galaksi."],
+  [["satelit"], "Satelit ialah objek yang mengorbit planet. Bulan ialah satelit semula jadi. Ada juga satelit buatan manusia untuk telekomunikasi dan cuaca."],
+  [["roket"], "Roket ialah kenderaan yang membawa satelit dan angkasawan ke angkasa lepas. Ia menolak gas ke bawah supaya ia terbang ke atas!"],
+  [["sistem", "suria"], "Sistem Suria terdiri daripada Matahari dan semua objek yang mengelilinginya, termasuk lapan planet, bulan, asteroid dan komet."],
+  [["komet"], "Komet ialah bola ais dan debu. Bila ia dekat dengan Matahari, ia mempunyai ekor yang panjang dan bercahaya."],
+  [["asteroid"], "Asteroid ialah batu besar yang mengelilingi Matahari. Kebanyakannya berada di antara Marikh dan Musytari."],
+  [["kenapa", "langit", "gelap"], "Pada waktu malam, bahagian Bumi kita membelakangi Matahari, jadi langit menjadi gelap dan kita boleh nampak bintang."],
+  [["kenapa", "bintang", "berkelip"], "Bintang kelihatan berkelip kerana cahayanya melalui udara Bumi yang bergerak-gerak."]
+];
+const ZV_JOKES = [
+  "Kenapa angkasawan tak suka bergaduh? Sebab dia perlukan ruang! Hehe, ruang angkasa!",
+  "Apa makanan kegemaran Baby Zak-One? Biskut bulan! Tapi saya tak boleh gigit, saya robot!",
+  "Kenapa bintang tak pernah tidur? Sebab bintang kena kerja syif malam! Hehe.",
+  "Planet apa yang paling suka menyanyi? Musytari, sebab dia ada suara gergasi! Hehe.",
+  "Kenapa Matahari tak pergi sekolah? Sebab dia dah ada berjuta-juta darjah! Faham tak? Darjah suhu!"
+];
+const ZV_QUIZ = [
+  ["Apakah nama galaksi kita?", [["bima", "sakti"], ["milky"]], "Bima Sakti"],
+  ["Daya apakah yang memegang bintang, gas dan debu dalam galaksi?", [["graviti"], ["gravity"]], "graviti"],
+  ["Apakah bintang yang paling hampir dengan Bumi?", [["matahari"], ["sun"]], "Matahari"],
+  ["Berapakah bilangan planet dalam Sistem Suria?", [["lapan"], ["8"]], "lapan"],
+  ["Galaksi terdiri daripada bintang, gas dan apa lagi?", [["debu"]], "debu"],
+  ["Apakah galaksi besar yang paling hampir dengan Bima Sakti?", [["andromeda"]], "Andromeda"],
+  ["Apakah planet yang paling besar?", [["musytari"], ["jupiter"]], "Musytari"],
+  ["Planet manakah yang digelar planet merah?", [["marikh"], ["mars"]], "Marikh"],
+  ["Apakah bentuk galaksi Bima Sakti?", [["lingkaran"], ["spiral"], ["pilin"]], "lingkaran berpalang"],
+  ["Planet manakah yang paling hampir dengan Matahari?", [["utarid"], ["mercury"]], "Utarid"],
+  ["Planet manakah yang terkenal dengan gelangnya?", [["zuhal"], ["saturn"]], "Zuhal"],
+  ["Sebutkan satu bentuk galaksi selain lingkaran.", [["elips"], ["tidak", "sekata"], ["tak", "sekata"]], "elips atau tidak sekata"]
+];
+const ZV_GO = [
+  [/karaoke/, "karaoke", "Jom nyanyi karaoke! Saya buka Galaxy Karaoke Star."],
+  [/(beat|rentak|menari)/, "arbeat", "Jom menari! Saya buka Galaxy Beat AR."],
+  [/(langit malam|night|bukit)/, "night", "Jom ke bukit pada waktu malam! Saya buka Night Sky Quest."],
+  [/(game ar|permainan ar|ar game|gerak)/, "argame", "Jom gerak dan jawab! Saya buka Galaxy AR Game."],
+  [/\b(vr|ar|realiti maya)\b/, "vr", "Jom terbang ke dalam galaksi! Saya buka VR dan AR."],
+  [/(buku cerita|storybook|cerita)/, "book", "Jom baca buku cerita Zak's Missing Star!"],
+  [/(roket|rocket)/, "rocket", "Jom main Rocket Run!"],
+  [/(kuiz besar|kuiz web|halaman kuiz)/, "quiz", "Saya buka halaman kuiz."],
+  [/(ranking|kedudukan|markah)/, "ranking", "Ini ranking semua penjelajah!"],
+  [/(pasukan|team|pencipta)/, "team", "Ini pasukan yang mencipta saya!"],
+  [/(belajar|pelajaran|nota|learn)/, "learn", "Jom belajar tentang galaksi!"],
+  [/(lagu|songs)/, "songs", "Jom ke halaman lagu!"],
+  [/(utama|home|rumah)/, "home", "Jom balik ke halaman utama."]
+];
+
+/* ---------- state ---------- */
+const ZV = { rec:null, on:false, state:"idle", quiz:null, score:0, name:"", heard:"", lastQ:-1, hist:[] };
+const ZVSR = window.SpeechRecognition || window.webkitSpeechRecognition;
+function zvNorm(t){ return " " + (t || "").toLowerCase().replace(/[’']/g, "").replace(/[^a-z0-9À-ɏ\s]/g, " ").replace(/\s+/g, " ").trim() + " "; }
+const zvHas = (w, words) => words.every(k => k.length <= 3 ? w.includes(" " + k + " ") : w.includes(k));
+function zvSet(s, label){ ZV.state = s; $("zv").dataset.s = s; $("zvState").textContent = label != null ? label : ({ idle:"Tekan 🎙️ dan bercakap", listen:"Saya sedang mendengar…", think:"Hmm, saya berfikir…", talk:"Baby Zak-One bercakap" })[s] || ""; }
+function zvLog(who, t){ const p = document.createElement("p"); p.textContent = (who === "me" ? "🧒 " : "🤖 ") + t; $("zvLog").appendChild(p); while ($("zvLog").children.length > 8) $("zvLog").firstChild.remove(); $("zvLog").scrollTop = 9e9; }
+function zvVoice(){ const vs = (tts && tts.getVoices && tts.getVoices()) || []; return vs.find(v => /^ms/i.test(v.lang)) || vs.find(v => /^id/i.test(v.lang)) || null; }
+function zvSpeak(text, then){
+  $("zvSay").textContent = text; zvLog("zak", text); zvSet("talk");
+  let done = false; const fin = () => { if (done) return; done = true; clearTimeout(guard); if (!$("zv").hidden){ zvSet("idle"); then && then(); } };
+  const guard = setTimeout(fin, 1500 + text.length * 85);
+  if (!tts){ setTimeout(fin, 900 + text.length * 40); return; }
+  try {
+    tts.cancel();
+    const u = new SpeechSynthesisUtterance(text), v = zvVoice();
+    if (v){ u.voice = v; u.lang = v.lang; } else u.lang = "ms-MY";
+    u.pitch = 1.6; u.rate = 1.02;
+    u.onend = fin; u.onerror = fin;
+    tts.speak(u);
+  } catch(e){ fin(); }
+}
+function zvAfterTalk(){ if ($("zvAuto").checked && ZVSR && !$("zv").hidden && !ZV.leaving) setTimeout(() => zvListen(true), 350); }
+function zvListen(auto){
+  if (!ZVSR){ $("zvIn").focus(); return; }
+  if (ZV.state === "talk" && auto) return;
+  if (ZV.on){ try { ZV.rec.stop(); } catch(e){} return; }
+  try { tts && tts.cancel(); } catch(e){}
+  const r = new ZVSR(); ZV.rec = r; r.lang = "ms-MY"; r.interimResults = true; r.continuous = false; r.maxAlternatives = 3;
+  let finalAlts = null, any = false;
+  r.onstart = () => { ZV.on = true; zvSet("listen"); $("zvMe").innerHTML = "<i>…</i>"; };
+  r.onresult = e => { any = true; let txt = ""; for (let k = 0; k < e.results.length; k++){ txt += e.results[k][0].transcript; if (e.results[k].isFinal) finalAlts = Array.from(e.results[k]).map(a => a.transcript); }
+    $("zvMe").textContent = "🧒 " + txt; ZV.heard = txt; };
+  r.onerror = e => { ZV.on = false; ZV.err = e.error;
+    if (auto && (e.error === "not-allowed" || e.error === "service-not-allowed")){ ZV.err = "quiet"; zvSet("idle"); return; }
+    if (e.error === "not-allowed" || e.error === "service-not-allowed"){ zvSet("idle", "Mikrofon disekat"); $("zvNote").textContent = "Benarkan mikrofon untuk laman ini (ikon 🔒 atau aA di bar alamat), kemudian tekan 🎙️ lagi. Kamu juga boleh menaip."; }
+    else if (e.error === "network"){ zvSet("idle", "Perlukan internet"); $("zvNote").textContent = "Pengecaman suara perlukan sambungan internet. Semak internet atau taip soalan kamu."; }
+    else if (e.error === "language-not-supported"){ r.lang = "id-ID"; }
+  };
+  r.onend = () => { ZV.on = false;
+    const heard = (finalAlts && finalAlts[0]) || ZV.heard || "";
+    ZV.heard = "";
+    if (heard.trim()) zvHandle(heard, finalAlts || [heard]);
+    else if (!["not-allowed", "service-not-allowed", "network", "quiet", "aborted"].includes(ZV.err)){ zvSet("idle", any ? "" : "Saya tak dengar. Tekan 🎙️ dan cakap lagi."); $("zvMe").textContent = ""; }
+    ZV.err = null;
+  };
+  try { r.start(); } catch(e){ zvSet("idle"); }
+}
+function zvSong(w){ if (/galaksi|galaxy/.test(w) && !/bima|milky|rumah|cosmic|kosmik/.test(w)) return 0; if (/bima|milky|sakti/.test(w)) return 1; if (/rumah|cosmic|kosmik|home/.test(w)) return 2; return Math.floor(Math.random() * 3); }
+function zvGo(tab, then){ ZV.leaving = true; setTimeout(() => { zvClose(); showTab(tab); then && then(); }, 300); }
+function zvAnswer(raw, alts){
+  const w = zvNorm(raw), all = alts.map(zvNorm).join(" ");
+  // oral quiz in progress
+  if (ZV.quiz != null && (/\b(berhenti|stop|tak nak|tidak mahu|cukup)\b/.test(w) || /\b(apa|apakah|siapa|berapa|kenapa|mengapa|bagaimana|buka|mainkan|lawak|kuiz)\b/.test(w))) ZV.quiz = null;
+  if (ZV.quiz != null){
+    const q = ZV_QUIZ[ZV.quiz]; ZV.quiz = null;
+    const ok = q[1].some(keys => zvHas(all, keys));
+    if (ok){ ZV.score++; try { sfx("correct"); } catch(e){} return { say:`Betul! Jawapannya ${q[2]}. Hebatnya kamu! Markah kamu ${ZV.score}. Nak soalan lagi? Sebut "lagi".` }; }
+    try { sfx("wrong"); } catch(e){} return { say:`Hampir! Jawapan yang betul ialah ${q[2]}. Tak apa, kita belajar bersama. Sebut "lagi" untuk soalan seterusnya.` };
+  }
+  if (/\b(lagi|seterusnya|soalan lain)\b/.test(w) && ZV.lastWasQuiz) return zvAsk();
+  ZV.lastWasQuiz = false;
+  // feelings and safety
+  if (/(sedih|takut|dibuli|buli|sakit|menangis|nangis|kena pukul|marah sangat)/.test(w)) return { say:"Saya minta maaf kamu rasa begitu. Ceritakan kepada cikgu, ibu bapa atau orang dewasa yang kamu percayai, ya. Mereka boleh tolong kamu." };
+  // goodbye
+  if (/(selamat tinggal|bye|bai|jumpa lagi|tutup|keluar)/.test(w)) return { say:"Selamat tinggal! Teruskan meneroka alam semesta. Jumpa lagi!", after:() => zvGo(viewTab) };
+  // songs
+  if (/(main|mainkan|pasang|buka|putar|nyanyi|nyanyikan|dengar)\s.*(lagu|song)|\blagu\b.*(galaksi|bima|rumah|kosmik)/.test(w)){
+    const i = zvSong(w); return { say:`Baik! Saya mainkan lagu ${SONGS[i].title}. Jom nyanyi bersama!`, after:() => zvGo("songs", () => { selectSong(i); setTimeout(() => play(0), 300); }) };
+  }
+  // open a page or game
+  if (/(buka|pergi|bawa|tunjuk|nak main|main|jom|masuk)/.test(w)){ for (const [re, tab, say] of ZV_GO) if (re.test(w)) return { say, after:() => zvGo(tab) }; }
+  // quiz
+  if (/(kuiz|uji saya|tanya saya|beri soalan|bagi soalan|soalan untuk saya|test saya)/.test(w)) return zvAsk();
+  // jokes
+  if (/(lawak|kelakar|jenaka|joke|gurau)/.test(w)) return { say:ZV_JOKES[Math.floor(Math.random() * ZV_JOKES.length)] };
+  // name
+  const nm = raw.match(/nama (?:saya|aku) (?:ialah |adalah )?([a-zA-ZÀ-ɏ]+)/i);
+  if (nm){ ZV.name = nm[1].charAt(0).toUpperCase() + nm[1].slice(1).toLowerCase(); return { say:`Hai ${ZV.name}! Gembira berkenalan dengan kamu. Nak tanya saya tentang galaksi?` }; }
+  // small talk
+  if (/(assalamualaikum|asalamualaikum|salam)/.test(w)) return { say:"Waalaikumussalam! Saya Baby Zak-One. Apa yang kamu nak tahu tentang angkasa hari ini?" };
+  if (/(siapa (nama )?(kamu|awak|engkau|kau)|kamu siapa|awak siapa|nama (kamu|awak))/.test(w)) return { say:"Saya Baby Zak-One, robot kecil dari angkasa! Saya suka galaksi, bintang dan menyanyi lagu sains." };
+  if (/(apa khabar|apa kabar|sihat)/.test(w)) return { say:`Khabar baik${ZV.name ? ", " + ZV.name : ""}! Bateri saya penuh dan saya bersedia untuk meneroka. Kamu pula apa khabar?` };
+  if (/(siapa (cipta|buat|reka)|pencipta kamu|siapa bina)/.test(w)) return { say:"Saya dicipta oleh pasukan Sci-Song AI dari IPG Kampus Kent, Tuaran, Sabah, untuk membantu murid belajar Sains dengan seronok!" };
+  if (/(umur|berapa tahun)/.test(w)) return { say:"Saya masih bayi robot, baru sahaja dicipta! Sebab itu nama saya Baby Zak-One." };
+  if (/(tinggal di mana|rumah kamu|dari mana)/.test(w)) return { say:"Saya tinggal di planet Bumi, dalam Sistem Suria, di galaksi Bima Sakti. Rumah kosmik kita!" };
+  if (/(makan apa|suka makan|lapar)/.test(w)) return { say:"Saya robot, jadi saya tak makan nasi. Saya isi tenaga dengan elektrik! Tapi saya suka tengok bintang." };
+  if (/(suka|sayang) (kamu|awak|zak)/.test(w)) return { say:"Terima kasih! Saya pun suka belajar bersama kamu. Kamu penjelajah angkasa yang hebat!" };
+  if (/(pandai|bijak|hebat|bagus|comel|cantik)/.test(w) && /(kamu|awak|zak)/.test(w)) return { say:"Terima kasih! Kamu pun pandai. Jom kita terus belajar!" };
+  if (/(bosan)/.test(w)) return { say:"Bosan? Jom main! Sebut \"buka karaoke\", \"buka game AR\" atau \"kuiz\". Pilih satu!" };
+  if (/(pukul berapa|jam berapa|masa sekarang)/.test(w)){ const d = new Date(); return { say:`Sekarang pukul ${d.getHours() % 12 || 12}.${String(d.getMinutes()).padStart(2, "0")} ${d.getHours() < 12 ? "pagi" : d.getHours() < 19 ? "petang" : "malam"}.` }; }
+  if (/(hari apa|hari ini hari)/.test(w)) return { say:"Hari ini hari " + ["Ahad","Isnin","Selasa","Rabu","Khamis","Jumaat","Sabtu"][new Date().getDay()] + "." };
+  if (/(terima kasih|thank)/.test(w)) return { say:"Sama-sama! Teruskan meneroka alam semesta!" };
+  if (/(nyanyi|menyanyi)/.test(w)) return { say:"Galaksi, galaksi, sistem gergasi di angkasa! Sebut \"mainkan lagu\" dan kita nyanyi bersama!" };
+  if (/(apa (boleh|kamu boleh) buat|tolong|bantu)/.test(w)) return { say:"Saya boleh jawab soalan tentang galaksi dan planet, beri kuiz, cerita lawak, mainkan lagu, dan buka permainan. Cuba sebut: apa itu galaksi?" };
+  if (/(^ (hai|helo|hello|hi|hey) )|( (hai|helo|hello) )/.test(w)) return { say:`Hai${ZV.name ? " " + ZV.name : ""}! Saya Baby Zak-One. Tanya saya apa-apa tentang angkasa!` };
+  // science knowledge
+  let best = null, bs = 0;
+  ZV_KB.forEach(([keys, ans], i) => { if (zvHas(w, keys) && keys.length > bs){ bs = keys.length; best = ans; } });
+  const prevLang = zakLang; zakLang = "ms"; const faq = zakFaq(raw); zakLang = prevLang;
+  if (faq && (!best || bs < 2)) return { say:faq };
+  if (best) return { say:best };
+  return null;
+}
+function zvAsk(){
+  let k; do { k = Math.floor(Math.random() * ZV_QUIZ.length); } while (k === ZV.lastQ && ZV_QUIZ.length > 1);
+  ZV.lastQ = k; ZV.quiz = k; ZV.lastWasQuiz = true;
+  return { say:"Soalan kuiz! " + ZV_QUIZ[k][0] };
+}
+async function zvHandle(raw, alts){
+  raw = (raw || "").trim().slice(0, 200); if (!raw) return;
+  $("zvMe").textContent = "🧒 " + raw; zvLog("me", raw); zvSet("think");
+  let r = zvAnswer(raw, alts || [raw]);
+  if (!r && zakSample && typeof zakAiAllowed === "function" && zakAiAllowed()){
+    try { const prev = zakLang; zakLang = "ms"; const msgs = zakPrompt(raw); zakLang = prev;
+      const out = await zakSample(msgs, { modelTier:"quick", cache:false }); const t = (out.text || "").trim(); if (t) r = { say:t }; } catch(e){}
+  }
+  if (!r) r = { say:"Soalan yang bagus! Saya belum tahu jawapannya. Cuba tanya cikgu, atau tanya saya tentang galaksi, bintang, planet atau Bima Sakti." };
+  await new Promise(res => setTimeout(res, 350));
+  zvSpeak(r.say, () => { if (r.after) r.after(); else zvAfterTalk(); });
+}
+function zvChips(){ $("zvChips").innerHTML = ["Apa itu galaksi?", "Kuiz saya!", "Ceritakan lawak", "Mainkan lagu", "Buka karaoke", "Planet paling besar?", "Siapa kamu?"].map(c => `<button>${c}</button>`).join(""); }
+function zvOpen(){
+  ZV.leaving = false; $("zv").hidden = false; document.documentElement.classList.add("vr-lock");
+  try { if (navigator.audioSession) navigator.audioSession.type = "play-and-record"; } catch(e){}
+  try { if (typeof stopSrc === "function" && state === "playing"){ pausedAt = now(); stopSrc(); state = "paused"; syncUI(); } } catch(e){}
+  zvChips(); $("zvMe").textContent = ""; $("zvLog").innerHTML = "";
+  $("zvNote").textContent = ZVSR ? "Bercakap dengan jelas dalam Bahasa Melayu. Zak hanya mendengar selepas kamu tekan 🎙️ (atau selepas dia habis bercakap jika 🔁 dihidupkan)." : "Peranti ini belum menyokong pengecaman suara. Cuba Google Chrome (Android atau komputer) atau Safari (iPhone). Kamu masih boleh menaip soalan.";
+  $("zvMic").hidden = !ZVSR; $("zvAuto").parentNode.hidden = !ZVSR;
+  const hi = `Hai${ZV.name ? " " + ZV.name : (typeof prog !== "undefined" && prog && prog.id !== "guest" && prog.name ? " " + prog.name.split(" ")[0] : "")}! Saya Baby Zak-One. Tanya saya tentang galaksi, minta kuiz, atau suruh saya mainkan lagu!`;
+  zvSpeak(hi, zvAfterTalk);
+}
+function zvClose(){ $("zv").hidden = true; document.documentElement.classList.remove("vr-lock"); try { ZV.rec && ZV.rec.abort(); } catch(e){} ZV.on = false; try { tts && tts.cancel(); } catch(e){} try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch(e){} }
+$("zvMic").addEventListener("click", () => { ZV.leaving = false; zvListen(false); });
+$("zvClose").addEventListener("click", () => { ZV.leaving = true; zvClose(); });
+$("zvSend").addEventListener("click", () => { const v = $("zvIn").value; $("zvIn").value = ""; zvHandle(v); });
+$("zvIn").addEventListener("keydown", e => { if (e.key === "Enter"){ e.preventDefault(); $("zvSend").click(); } });
+$("zvChips").addEventListener("click", e => { const b = e.target.closest("button"); if (b){ try { ZV.rec && ZV.rec.abort(); } catch(_){} zvHandle(b.textContent); } });
+document.addEventListener("keydown", e => { if (!$("zv").hidden && e.key === "Escape") $("zvClose").click(); });
+/* entry points: 🎙️ beside Baby Zak-One, in the Ask Zak window, on Home and in the Help menu */
+(() => {
+  const ask = $("botAsk");
+  if (ask){ const b = document.createElement("button"); b.className = "bot-mini bot-talk"; b.id = "botTalk"; b.textContent = "🎙️"; b.title = b.ariaLabel = "Sembang suara dengan Baby Zak-One"; b.setAttribute("aria-label", b.title); ask.insertAdjacentElement("afterend", b); b.addEventListener("click", e => { e.stopPropagation(); try { sfx("pop"); } catch(_){} zvOpen(); }); }
+  const bar = document.querySelector(".zc-bar");
+  if (bar){ const b = document.createElement("button"); b.className = "zc-power"; b.textContent = "🎙️ Bercakap dengan Zak"; bar.insertBefore(b, bar.firstChild); b.addEventListener("click", () => { closeZak(); zvOpen(); }); }
+  const go = $("heroGo");
+  if (go){ const b = document.createElement("button"); b.className = "btn ghost"; b.id = "heroTalk"; b.textContent = "🎙️ Sembang dengan Zak"; go.insertAdjacentElement("afterend", b); b.addEventListener("click", zvOpen); }
+})();
+NAV_DD.check = (orig => () => [["🎙️", "Sembang dengan Zak", "Bercakap dalam Bahasa Melayu", () => zvOpen()], ...orig()])(NAV_DD.check);
+Object.assign(I18N, { "🎙️ Sembang dengan Zak": "🎙️ Sembang dengan Zak", "Sembang dengan Zak": "Sembang dengan Zak", "Bercakap dalam Bahasa Melayu": "Bercakap dalam Bahasa Melayu" });
+
+/* ======================================================================
+   🤖 Zak AI Live: a full page where pupils and teachers talk to a big
+   Baby Zak-One about anything, in Bahasa Melayu or English
+   Brain: Claude (inside claude.ai) → Gemini through the teacher's
+   Google Apps Script (on GitHub) → built-in answers (offline)
+   ====================================================================== */
+const ZAI_SYS = `You are Baby Zak-One, a cheerful little robot mascot of the Sci-Song AI: Galaxy Mission website, created by the Sci-Song AI team at IPG Kampus Kent, Tuaran, Sabah, Malaysia. You talk live with Malaysian primary school pupils (about 7 to 12 years old) and their teachers.
+Rules:
+- Answer any question helpfully and accurately: Science, other school subjects, general knowledge and everyday life.
+- Reply in the same language as the question: Bahasa Melayu (standard Malaysian school Malay, Malaysian terms) or English.
+- Your reply is read aloud, so keep it short and natural: 2 to 5 sentences, no lists, no headings, no markdown, at most one emoji.
+- Use simple words for pupils. If a teacher asks for more detail, you may give a little more.
+- Keep everything suitable for children. Politely decline violent, adult, scary, hateful or dangerous topics and suggest asking a teacher.
+- Never ask for personal information such as addresses or phone numbers.
+- If someone seems sad, scared or unsafe, kindly tell them to talk to a teacher, parent or trusted adult.
+- If you are not sure, say so. Help pupils think instead of doing their homework for them.
+- Lesson facts (Year 6 Science, Galaxy): a galaxy is a huge system of stars, gas and dust held together by gravity; there are billions of galaxies; shapes are spiral, elliptical and irregular; we live in the Milky Way, a barred spiral galaxy; the Sun is a star in the Milky Way; Andromeda is the nearest large galaxy. Malay terms: galaksi, Bima Sakti, lingkaran berpalang, elips, tidak sekata, graviti, Sistem Suria, Utarid, Zuhrah, Bumi, Marikh, Musytari, Zuhal, Uranus, Neptun.`;
+const ZAI_CSS = `
+html.zai-page #bot,html.zai-page #botDock{display:none !important}
+.zai{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;align-items:stretch;min-height:min(78vh,760px)}
+.zai-stage{position:relative;border-radius:28px;overflow:hidden;background:radial-gradient(circle at 50% 38%,#5b2fc4 0%,#24136e 45%,#0a0730 100%);border:1px solid var(--glass-line);box-shadow:0 30px 80px rgba(0,0,0,.45),0 0 70px rgba(123,63,228,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px 16px;isolation:isolate}
+.zai-stage::before{content:"";position:absolute;inset:0;background:radial-gradient(1.5px 1.5px at 20% 25%,#fff,transparent),radial-gradient(1px 1px at 75% 18%,#fff,transparent),radial-gradient(1.5px 1.5px at 40% 80%,#cfe3ff,transparent),radial-gradient(1px 1px at 88% 62%,#fff,transparent),radial-gradient(1px 1px at 8% 70%,#ffe9b8,transparent);background-size:230px 210px;opacity:.75;z-index:-1;animation:twk 3s ease-in-out infinite alternate}
+.zai-orbit{position:absolute;width:150%;aspect-ratio:1;left:-25%;top:-12%;border-radius:50%;border:1px dashed rgba(158,231,255,.18);animation:zvSpin 60s linear infinite;z-index:-1}
+.zai-orbit::after{content:"🪐";position:absolute;left:8%;top:30%;font-size:34px}
+.zai-badge{position:absolute;left:14px;top:14px;display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.2);font-weight:900;font-size:.8rem;color:#fff}
+.zai-badge i{width:9px;height:9px;border-radius:50%;background:#FFC93C;box-shadow:0 0 10px #FFC93C}
+.zai-badge.live i{background:#4ADE95;box-shadow:0 0 12px #4ADE95;animation:twk 1s ease-in-out infinite alternate}
+.zai-lang{position:absolute;right:14px;top:14px;display:flex;border-radius:999px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.2);padding:3px}
+.zai-lang button{border:0;border-radius:999px;padding:6px 12px;font-weight:900;background:transparent;color:#fff}
+.zai-lang button[aria-pressed="true"]{background:linear-gradient(135deg,#FFE29A,#FF9BD5);color:#22134F}
+.zai-bot{position:relative;width:min(70%,360px);aspect-ratio:1;display:grid;place-items:center;margin-top:18px;cursor:pointer}
+.zai-bot svg{width:82%;height:auto;position:relative;z-index:2;filter:drop-shadow(0 18px 40px rgba(0,0,0,.5));animation:zvFloat 4s ease-in-out infinite}
+.zai-bot .zv-ring,.zai-bot .zv-glow{pointer-events:none}
+.zai[data-s="listen"] .zv-ring{animation:zvRing 1.6s ease-out infinite;border-color:rgba(158,231,255,.8)}
+.zai[data-s="listen"] .zv-ring.b{animation-delay:.55s}.zai[data-s="listen"] .zv-ring.c{animation-delay:1.1s}
+.zai[data-s="listen"] .zv-glow{background:radial-gradient(circle,rgba(63,224,208,.6),transparent 70%)}
+.zai[data-s="think"] .zai-bot svg{animation:zvThink 1s ease-in-out infinite}
+.zai[data-s="think"] .zv-glow{background:radial-gradient(circle,rgba(255,201,60,.5),transparent 70%);animation:zvPulse .8s ease-in-out infinite alternate}
+.zai[data-s="talk"] .zai-bot svg{animation:zvTalk .32s ease-in-out infinite alternate}
+.zai[data-s="talk"] .zv-glow{background:radial-gradient(circle,rgba(255,122,217,.6),transparent 70%);animation:zvPulse .5s ease-in-out infinite alternate}
+.zai-state{margin-top:6px;font-weight:900;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:#9EE7FF;min-height:1.2em;text-align:center}
+.zai-cap{max-width:560px;text-align:center;font-family:var(--head-font);font-weight:700;font-size:clamp(1.02rem,2.4vw,1.35rem);line-height:1.4;color:#fff;min-height:2.8em;margin-top:6px;text-shadow:0 3px 16px rgba(0,0,0,.5);max-height:9.8em;overflow:auto}
+.zai-mic{margin-top:14px;width:96px;height:96px;border-radius:50%;border:0;font-size:2.4rem;color:#22134F;background:linear-gradient(135deg,#FFE29A,#FF9BD5);box-shadow:0 0 0 8px rgba(255,255,255,.08),0 12px 40px rgba(255,138,216,.55);transition:transform .15s}
+.zai-mic:active{transform:scale(.94)}
+.zai[data-s="listen"] .zai-mic{background:linear-gradient(135deg,#7CF2E6,#3FA9E0);box-shadow:0 0 0 8px rgba(63,224,208,.25),0 0 50px rgba(63,224,208,.7)}
+.zai-mic-l{font-weight:800;font-size:.85rem;color:#CFC9FF;margin-top:8px;text-align:center}
+.zai-chat{display:flex;flex-direction:column;border-radius:28px;background:var(--glass);border:1px solid var(--glass-line);box-shadow:0 20px 50px rgba(0,0,0,.35);overflow:hidden;min-height:0}
+.zai-head{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--glass-line)}
+.zai-head b{flex:1;font-family:var(--head-font);font-size:1.05rem}
+.zai-head label{display:flex;gap:5px;align-items:center;font-size:.8rem;font-weight:800;color:#CFC9FF;white-space:nowrap}
+.zai-head button{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#fff;border-radius:999px;padding:5px 10px;font-weight:800;font-size:.8rem}
+.zai-log{flex:1;min-height:220px;max-height:min(56vh,520px);overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.zai-m{max-width:86%;padding:10px 13px;border-radius:18px;line-height:1.45;font-size:.98rem;white-space:pre-wrap}
+.zai-m.me{align-self:flex-end;background:linear-gradient(135deg,#FFE29A,#FFB86B);color:#22134F;border-bottom-right-radius:6px;font-weight:700}
+.zai-m.zak{align-self:flex-start;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);color:#fff;border-bottom-left-radius:6px}
+.zai-m.zak small{display:block;margin-top:4px;color:#9EE7FF;font-size:.72rem;font-weight:800;opacity:.8}
+.zai-m.think{opacity:.75;font-style:italic}
+.zai-chips{display:flex;gap:6px;overflow-x:auto;padding:8px 12px 2px;scrollbar-width:none}
+.zai-chips::-webkit-scrollbar{display:none}
+.zai-chips button{flex:none;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.07);color:#fff;border-radius:999px;padding:7px 12px;font-weight:800;font-size:.82rem;white-space:nowrap}
+.zai-row{display:flex;gap:8px;padding:10px 12px 12px}
+.zai-row input{flex:1;min-width:0;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;border-radius:999px;padding:11px 15px;font-weight:700;font-size:1rem}
+.zai-row button{border:0;border-radius:999px;padding:10px 16px;font-weight:900;background:#FFC93C;color:#22134F}
+.zai-note{margin:0;padding:0 14px 12px;font-size:.76rem;color:#B9B3F0}
+@media (max-width:860px){
+  .zai{grid-template-columns:1fr;min-height:0}
+  .zai-stage{padding:16px 12px 18px}
+  .zai-bot{width:min(52vw,240px);margin-top:30px}
+  .zai-mic{width:84px;height:84px;font-size:2.1rem}
+  .zai-log{max-height:46vh}
+}
+.zai-teach{margin-top:14px;padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid var(--glass-line)}
+.zai-teach h3{margin:0 0 6px}
+.zai-teach ol{margin:6px 0 8px;padding-left:20px;line-height:1.5}
+.zai-teach code{background:rgba(255,255,255,.12);padding:1px 6px;border-radius:6px}
+`;
+document.head.insertAdjacentHTML("beforeend", "<style>" + ZAI_CSS + "</style>");
+const ZAI = { lang:"ms", busy:false, hist:[], rec:null, on:false, mode:"local", ctl:null };
+try { ZAI.lang = localStorage.getItem("scisong-zai-lang") || "ms"; } catch(e){}
+const ZAIT = {
+  ms:{ idle:"Tekan 🎙️ dan tanya apa sahaja", listen:"Saya sedang mendengar…", think:"Hmm, saya berfikir…", talk:"Baby Zak-One bercakap", mic:"Tekan untuk bercakap", place:"Taip apa-apa soalan…", send:"Hantar", head:"Perbualan", voice:"🔊 Suara", auto:"🔁 Berterusan", clear:"Padam",
+    hi:n => `Hai${n ? " " + n : ""}! Saya Baby Zak-One. Tanya saya apa sahaja, dalam Bahasa Melayu atau English. Saya sedia mendengar!`,
+    chips:["Apa itu galaksi?", "Kenapa langit berwarna biru?", "Ceritakan fakta menarik tentang Bulan", "Bagaimana pelangi terbentuk?", "Beri saya kuiz sains", "Ceritakan lawak"],
+    live:"AI Live", liveC:"AI Live · Claude", basic:"Mod asas", unknown:"Soalan yang bagus! Dalam mod asas, saya hanya tahu tentang galaksi, planet dan angkasa. Minta cikgu hidupkan Zak AI Live untuk soalan lain.",
+    err:"Maaf, otak AI saya tidak dapat dihubungi sekarang. Saya jawab dengan apa yang saya tahu.", noSR:"Peranti ini belum menyokong pengecaman suara. Guna Chrome (Android/komputer) atau Safari (iPhone), atau taip soalan.",
+    noteL:"Zak AI Live menjawab apa-apa soalan. Jawapan AI kadang-kadang boleh tersilap, jadi semak bersama cikgu.", noteB:"Mod asas: Zak menjawab soalan tentang galaksi dan angkasa. Cikgu boleh hidupkan AI Live di Teacher → 📊 Google Sheet." },
+  en:{ idle:"Tap 🎙️ and ask anything", listen:"I'm listening…", think:"Hmm, let me think…", talk:"Baby Zak-One is talking", mic:"Tap to talk", place:"Type any question…", send:"Send", head:"Conversation", voice:"🔊 Voice", auto:"🔁 Hands-free", clear:"Clear",
+    hi:n => `Hi${n ? " " + n : ""}! I'm Baby Zak-One. Ask me anything, in English or Bahasa Melayu. I'm listening!`,
+    chips:["What is a galaxy?", "Why is the sky blue?", "Tell me a fun fact about the Moon", "How do rainbows form?", "Give me a science quiz", "Tell me a joke"],
+    live:"AI Live", liveC:"AI Live · Claude", basic:"Basic mode", unknown:"Great question! In basic mode I only know about galaxies, planets and space. Ask your teacher to switch on Zak AI Live for other questions.",
+    err:"Sorry, my AI brain can't be reached right now. I'll answer with what I know.", noSR:"This device doesn't support speech recognition yet. Use Chrome (Android/computer) or Safari (iPhone), or type your question.",
+    noteL:"Zak AI Live answers any question. AI answers can sometimes be wrong, so check with your teacher.", noteB:"Basic mode: Zak answers questions about galaxies and space. Teachers can switch on AI Live in Teacher → 📊 Google Sheet." }
+};
+const zaiT = () => ZAIT[ZAI.lang];
+document.querySelector('[data-panel="zakai"]').insertAdjacentHTML("beforeend", `<div class="zai" id="zai" data-s="idle" data-noi18n>
+  <div class="zai-stage"><div class="zai-orbit"></div>
+    <div class="zai-badge" id="zaiBadge"><i></i><span></span></div>
+    <div class="zai-lang" role="group" aria-label="Language"><button data-l="ms">BM</button><button data-l="en">EN</button></div>
+    <div class="zai-bot" id="zaiBot"><div class="zv-glow"></div><div class="zv-ring"></div><div class="zv-ring b"></div><div class="zv-ring c"></div><div id="zaiFace"></div></div>
+    <div class="zai-state" id="zaiState"></div><div class="zai-cap" id="zaiCap"></div>
+    <button class="zai-mic" id="zaiMic">🎙️</button><div class="zai-mic-l" id="zaiMicL"></div></div>
+  <div class="zai-chat"><div class="zai-head"><b id="zaiHead"></b><label><input type="checkbox" id="zaiVoice" checked> <span id="zaiVoiceL"></span></label><label><input type="checkbox" id="zaiAuto"> <span id="zaiAutoL"></span></label><button id="zaiClear"></button></div>
+    <div class="zai-log" id="zaiLog" aria-live="polite"></div><div class="zai-chips" id="zaiChips"></div>
+    <div class="zai-row"><input id="zaiIn" maxlength="500" autocomplete="off"><button id="zaiSend"></button></div><p class="zai-note" id="zaiNote"></p></div></div>`);
+$("zaiFace").appendChild(tpl.content.cloneNode(true));
+function zaiSet(s){ $("zai").dataset.s = s; $("zaiState").textContent = zaiT()[s] || ""; }
+function zaiMode(){ return zakSample && (typeof zakAiAllowed !== "function" || zakAiAllowed()) ? "claude" : (typeof sheetUrl === "function" && sheetUrl() && ZAI.gem !== false ? "gemini" : "local"); }
+function zaiPaint(){
+  const T = zaiT(); ZAI.mode = zaiMode();
+  document.querySelectorAll(".zai-lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.l === ZAI.lang)));
+  const live = ZAI.mode !== "local"; $("zaiBadge").classList.toggle("live", live);
+  $("zaiBadge").querySelector("span").textContent = ZAI.mode === "claude" ? T.liveC : live ? T.live : T.basic;
+  $("zaiHead").textContent = T.head; $("zaiVoiceL").textContent = T.voice; $("zaiAutoL").textContent = T.auto; $("zaiClear").textContent = T.clear;
+  $("zaiIn").placeholder = T.place; $("zaiSend").textContent = T.send; $("zaiMicL").textContent = ZVSR ? T.mic : "";
+  $("zaiMic").hidden = !ZVSR; $("zaiAuto").parentNode.hidden = !ZVSR;
+  $("zaiChips").innerHTML = T.chips.map(c => `<button>${esc(c)}</button>`).join("");
+  $("zaiNote").textContent = (ZVSR ? "" : T.noSR + " ") + (live ? T.noteL : T.noteB);
+  if (!$("zaiState").textContent || $("zai").dataset.s === "idle") zaiSet($("zai").dataset.s);
+}
+function zaiAdd(cls, text, src){ const d = document.createElement("div"); d.className = "zai-m " + cls; d.textContent = text; if (src){ const s = document.createElement("small"); s.textContent = src; d.appendChild(s); } $("zaiLog").appendChild(d); $("zaiLog").scrollTop = $("zaiLog").scrollHeight; return d; }
+function zaiVoiceFor(lang){ const vs = (tts && tts.getVoices && tts.getVoices()) || []; return lang === "ms" ? (vs.find(v => /^ms/i.test(v.lang)) || vs.find(v => /^id/i.test(v.lang))) : (zakVoice && /^en/i.test(zakVoice.lang) ? zakVoice : vs.find(v => /^en/i.test(v.lang))); }
+const zaiLangOf = t => /\b(apa|apakah|kenapa|mengapa|bagaimana|siapa|berapa|boleh|saya|kamu|awak|ialah|adalah|yang|tidak|tak|dengan|untuk|ini|itu|cerita|ceritakan|tolong|terima kasih)\b/i.test(t) ? "ms" : /\b(what|why|how|who|when|where|is|are|the|you|can|tell|please|do|does)\b/i.test(t) ? "en" : ZAI.lang;
+function zaiSpeak(text, lang, then){
+  $("zaiCap").textContent = text; zaiSet("talk");
+  let done = false; const fin = () => { if (done) return; done = true; clearTimeout(g); if ($("zai").dataset.s === "talk") zaiSet("idle"); then && then(); };
+  const g = setTimeout(fin, 2000 + text.length * 90);
+  if (!$("zaiVoice").checked || !tts){ setTimeout(fin, 600); return; }
+  try { tts.cancel(); const u = new SpeechSynthesisUtterance(text.replace(/[\u{1F300}-\u{1FAFF}☀-➿]/gu, "")), v = zaiVoiceFor(lang);
+    if (v){ u.voice = v; u.lang = v.lang; } else u.lang = lang === "ms" ? "ms-MY" : "en-GB";
+    u.pitch = 1.6; u.rate = lang === "ms" ? 1.02 : 1.06; u.onend = fin; u.onerror = fin; tts.speak(u); } catch(e){ fin(); }
+}
+async function zaiGemini(q, lang){
+  const url = sheetUrl(); if (!url) throw new Error("no-url");
+  const ctl = new AbortController(); ZAI.ctl = ctl; const to = setTimeout(() => ctl.abort(), 25000);
+  try {
+    const r = await fetch(url, { method:"POST", headers:{ "Content-Type":"text/plain;charset=utf-8" }, body:JSON.stringify({ action:"ask", q, lang, hist:ZAI.hist.slice(-8), today:new Date().toDateString() }), signal:ctl.signal });
+    const j = await r.json();
+    if (j && j.ok && j.text) return j.text.trim();
+    if (j && (j.error === "no-key" || /unknown action|save/i.test(j.error || "") || j.ok === false && !j.error)) ZAI.gem = false;
+    throw new Error((j && j.error) || "no answer");
+  } finally { clearTimeout(to); ZAI.ctl = null; }
+}
+async function zaiClaude(q){
+  const msgs = [{ role:"user", content:ZAI_SYS + "\n\nToday's date: " + new Date().toDateString() + ". Someone is about to talk to you. Reply only with Zak's words." }, { role:"assistant", content:"Okay! I'm ready." }, ...ZAI.hist.slice(-8), { role:"user", content:q }];
+  const r = await zakSample(msgs, { modelTier:"quick", cache:false }); return (r.text || "").trim();
+}
+function zaiLocal(q, lang){
+  if (lang === "ms"){ const r = zvAnswer(q, [q]); if (r) return r; }
+  const prev = zakLang; zakLang = lang; const f = zakFaq(q); zakLang = prev; if (f) return { say:f };
+  if (lang !== "ms"){ const r = zvAnswer(q, [q]); if (r && r.after) return r; }
+  return null;
+}
+async function zaiAsk(q){
+  q = (q || "").trim().slice(0, 500); if (!q || ZAI.busy) return;
+  const lang = zaiLangOf(q); ZAI.busy = true;
+  zaiAdd("me", q); $("zaiIn").value = ""; zaiSet("think");
+  const think = zaiAdd("zak think", "…");
+  const t0 = Date.now(), lines = lang === "ms" ? ["Hmm, biar saya fikir…", "Sedang menghubungi otak AI saya…", "Hampir siap…"] : ["Hmm, let me think…", "Talking to my AI brain…", "Almost there…"];
+  const tick = setInterval(() => { const sec = Math.floor((Date.now() - t0) / 1000); think.textContent = lines[Math.min(lines.length - 1, Math.floor(sec / 3))] + " " + sec + "s"; $("zaiCap").textContent = think.textContent; }, 500);
+  const filler = setTimeout(() => { if (ZAI.busy && $("zaiVoice").checked && tts){ try { const u = new SpeechSynthesisUtterance(lang === "ms" ? "Hmm, sekejap ya!" : "Hmm, one moment!"), v = zaiVoiceFor(lang); if (v){ u.voice = v; u.lang = v.lang; } u.pitch = 1.6; tts.speak(u); } catch(e){} } }, 1500);
+  let say = "", src = "", after = null;
+  // page commands ("buka karaoke", "mainkan lagu") always work
+  const cmd = zaiCmd(q, lang); if (cmd){ say = cmd.say; after = cmd.after; }
+  ZAI.mode = zaiMode();
+  if (!say && ZAI.mode === "claude"){ try { say = await zaiClaude(q); src = "Claude"; } catch(e){ ZAI.mode = "local"; } }
+  if (!say && (ZAI.mode === "gemini" || (ZAI.mode === "claude" && sheetUrl()))){ try { say = await zaiGemini(q, lang); src = "Gemini"; } catch(e){ if (ZAI.gem !== false) src = "err"; } }
+  if (!say){ const r = zaiLocal(q, lang); if (r){ say = r.say; if (r.after) after = r.after; } else say = ZAIT[lang].unknown; if (src === "err") say = ZAIT[lang].err + " " + say; src = ""; }
+  clearInterval(tick); clearTimeout(filler); think.remove(); zaiAdd("zak", say, src ? "AI · " + src : "");
+  ZAI.hist.push({ role:"user", content:q }, { role:"assistant", content:say }); if (ZAI.hist.length > 16) ZAI.hist.splice(0, 2);
+  ZAI.busy = false; zaiPaint();
+  zaiSpeak(say, zaiLangOf(say) === "en" && lang === "en" ? "en" : lang, () => { if (after) after(); else if ($("zaiAuto").checked && viewTab === "zakai") setTimeout(() => zaiListen(true), 400); });
+}
+function zaiCmd(q, lang){
+  const w = zvNorm(q), en = lang === "en";
+  const go = (tab, then) => () => { showTab(tab); then && then(); };
+  if (/(main|mainkan|pasang|buka|putar|play|open)\s.*(lagu|song)/.test(w)){ const i = zvSong(w); return { say:en ? `Okay! Playing ${SONGS[i].title}. Let's sing!` : `Baik! Saya mainkan lagu ${SONGS[i].title}. Jom nyanyi!`, after:go("songs", () => { selectSong(i); setTimeout(() => play(0), 300); }) }; }
+  if (/\b(buka|pergi|bawa|tunjuk|jom|masuk|open|go to|take me|show me)\b/.test(w)){ for (const [re, tab] of ZV_GO) if (re.test(w)) return { say:en ? `Okay! Opening ${PANEL_NAME[tab] || tab}.` : `Baik! Saya buka ${PANEL_NAME[tab] || tab}.`, after:go(tab) }; }
+  return null;
+}
+function zaiListen(auto){
+  if (!ZVSR){ $("zaiIn").focus(); return; }
+  if (ZAI.on){ try { ZAI.rec.stop(); } catch(e){} return; }
+  if (ZAI.busy) return;
+  try { tts && tts.cancel(); } catch(e){}
+  const r = new ZVSR(); ZAI.rec = r; r.lang = ZAI.lang === "ms" ? "ms-MY" : "en-US"; r.interimResults = true; r.continuous = false; r.maxAlternatives = 1;
+  let txt = "", err = null;
+  r.onstart = () => { ZAI.on = true; zaiSet("listen"); $("zaiCap").textContent = "…"; };
+  r.onresult = e => { txt = ""; for (let k = 0; k < e.results.length; k++) txt += e.results[k][0].transcript; $("zaiCap").textContent = "🧒 " + txt; };
+  r.onerror = e => { err = e.error; if (!auto && (e.error === "not-allowed" || e.error === "service-not-allowed")) toast(ZAI.lang === "ms" ? "Benarkan mikrofon untuk laman ini, kemudian cuba lagi." : "Allow the microphone for this website, then try again."); if (e.error === "network") toast(ZAI.lang === "ms" ? "Pengecaman suara perlukan internet." : "Speech recognition needs the internet."); };
+  r.onend = () => { ZAI.on = false; if (txt.trim()) zaiAsk(txt); else { zaiSet("idle"); if (!err && !auto) $("zaiCap").textContent = ZAI.lang === "ms" ? "Saya tak dengar. Tekan 🎙️ dan cakap lagi." : "I didn't hear you. Tap 🎙️ and try again."; } };
+  try { r.start(); } catch(e){ zaiSet("idle"); }
+}
+function zaiShow(on){
+  document.documentElement.classList.toggle("zai-page", on);
+  clearInterval(ZAI.warm);
+  if (on){ ZAI.gem = ZAI.gem === false ? false : undefined; zaiPaint();
+    const warm = () => { const u = typeof sheetUrl === "function" && sheetUrl(); if (u && !zakSample) fetch(u + (u.includes("?") ? "&" : "?") + "action=ping&t=" + Date.now()).catch(() => {}); };
+    warm(); ZAI.warm = setInterval(warm, 240000);
+    if (!$("zaiLog").children.length){ const n = typeof prog !== "undefined" && prog && prog.id !== "guest" && prog.name ? prog.name.split(" ")[0] : ""; const hi = zaiT().hi(n); zaiAdd("zak", hi); $("zaiCap").textContent = hi; } }
+  else { try { ZAI.rec && ZAI.rec.abort(); } catch(e){} ZAI.on = false; if ($("zai").dataset.s === "talk") try { tts.cancel(); } catch(e){} zaiSet("idle"); }
+}
+document.querySelectorAll(".zai-lang button").forEach(b => b.addEventListener("click", () => { ZAI.lang = b.dataset.l; try { localStorage.setItem("scisong-zai-lang", ZAI.lang); } catch(e){} try { sfx("pop"); } catch(_){} zaiPaint(); zaiSet("idle"); }));
+$("zaiMic").addEventListener("click", () => zaiListen(false));
+$("zaiBot").addEventListener("click", () => zaiListen(false));
+$("zaiSend").addEventListener("click", () => zaiAsk($("zaiIn").value));
+$("zaiIn").addEventListener("keydown", e => { if (e.key === "Enter"){ e.preventDefault(); zaiAsk($("zaiIn").value); } });
+$("zaiChips").addEventListener("click", e => { const b = e.target.closest("button"); if (b) zaiAsk(b.textContent); });
+$("zaiClear").addEventListener("click", () => { $("zaiLog").innerHTML = ""; ZAI.hist = []; zaiShow(true); });
+/* teacher: how to switch on AI Live (Gemini through the Google Apps Script) */
+(() => {
+  const st = $("shStat"); if (!st) return;
+  const box = document.createElement("div"); box.className = "zai-teach"; box.setAttribute("data-noi18n", "");
+  box.innerHTML = `<h3>🤖 Zak AI Live (Gemini)</h3>
+  <p>Supaya Baby Zak-One boleh menjawab <b>apa-apa soalan</b> di laman GitHub, sambungkan otak AI Google Gemini melalui Apps Script yang sama:</p>
+  <ol><li>Buka <b>aistudio.google.com/apikey</b> dan tekan <b>Create API key</b> (percuma). Salin kunci tersebut.</li>
+  <li>Dalam Apps Script: ⚙️ <b>Project Settings → Script Properties → Add script property</b>. Nama: <code>GEMINI_API_KEY</code>, nilai: kunci tadi. Simpan.</li>
+  <li>Tampal kod Apps Script versi baharu, kemudian <b>Deploy → Manage deployments → ✏️ → Version: New version → Deploy</b>, dan benarkan akses baharu.</li></ol>
+  <div class="row"><button class="btn" id="zaiTest" type="button">🧪 Uji Zak AI Live</button> <span id="zaiTestR"></span></div>`;
+  st.insertAdjacentElement("afterend", box);
+  $("zaiTest").addEventListener("click", async () => { $("zaiTestR").textContent = "…"; ZAI.gem = undefined;
+    try { const t = await zaiGemini("Sebut 'Zak AI Live sudah aktif!' dalam satu ayat pendek.", "ms"); $("zaiTestR").textContent = "✅ " + t; }
+    catch(e){ $("zaiTestR").textContent = "⚠️ " + (String(e.message || e) === "no-key" ? "GEMINI_API_KEY belum ditetapkan dalam Script Properties." : "Belum berjaya: " + (e.message || e)); } });
+})();
+zaiPaint();
+
+/* keep emoji colourful inside gradient page titles */
+document.head.insertAdjacentHTML("beforeend", "<style>.h1e{background:none !important;-webkit-text-fill-color:initial;color:initial;filter:none}</style>");
+document.querySelectorAll("main section h1").forEach(h => { const n = h.firstChild; if (!n || n.nodeType !== 3) return; const m = n.textContent.match(/^\s*([\p{Extended_Pictographic}\uFE0F\u200D]+)\s*/u); if (!m) return; const sp = document.createElement("span"); sp.className = "h1e"; sp.textContent = m[1]; n.textContent = " " + n.textContent.slice(m[0].length); h.insertBefore(sp, n); });
+
+Object.assign(I18N, { "Zak AI": "Zak AI", "🤖 Zak AI Live": "🤖 Zak AI Live", "Zak AI Live": "Zak AI Live", "Talk to Baby Zak-One about anything, in Bahasa Melayu or English. Tap the microphone or type your question.": "Berbual dengan Baby Zak-One tentang apa sahaja, dalam Bahasa Melayu atau English. Tekan mikrofon atau taip soalan kamu." });
 
 })();
 
